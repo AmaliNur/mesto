@@ -1,5 +1,6 @@
 const placesList = document.querySelector(".places__list");
 
+//const allPopups = document.querySelectorAll('.popup');
 const profilePopup = document.querySelector(".popup_type_edit");
 const cardPopup = document.querySelector(".popup_type_new-card");
 const imagePopup = document.querySelector(".popup_type_image");
@@ -12,6 +13,9 @@ const editButton = document.querySelector(".profile__edit-button");
 const closeButton = document.querySelector(".popup__close");
 const cardCloseButton = document.querySelector(".popup__close");
 const imageCloseButton = document.querySelector(".popup__close");
+
+const cardFormElement = document.querySelector(".popup__form")
+const closeButtons = document.querySelectorAll(".popup__close");
 
 function createCard(cardData) {
     const cardTemplate = document.getElementById("card-template").content;
@@ -56,12 +60,40 @@ function handleProfileFormSubmit(evt) {
     closeModal(profilePopup);
 }
 
+function handleCardFormSubmit(evt) {
+    evt.preventDefault(); 
+
+    const cardNameInput = cardFormElement.querySelector(".popup__input_type_card-name");
+    const cardLinkInput = cardFormElement.querySelector(".popup__input_type_url");
+
+    const cardData = {
+        name: cardNameInput.value,
+        link: cardLinkInput.value
+    };
+
+    const newCardELement = createCard(cardData);
+    const placesList = document.querySelector('.places__list');
+    placesList.prepend(newCardELement);
+
+    closeModal(cardPopup);
+
+}
+
 profileFormElement.addEventListener('submit', handleProfileFormSubmit); 
+
+cardFormElement.addEventListener('submit', handleProfileFormSubmit);
+
+addButton.addEventListener('click', function() {
+    openModal(cardPopup); 
+}); 
 
 editButton.addEventListener('click', function() {
     openModal(profilePopup); 
 }); 
 
-closeButton.addEventListener('click', function() {
-    closeModal(profilePopup); 
-}); 
+closeButtons.forEach(button => {
+    button.addEventListener("click", function () {
+        const popup = button.closest(".popup");
+        closeModal(popup);
+    });
+});
