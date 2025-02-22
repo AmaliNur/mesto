@@ -25,13 +25,25 @@ const closeButtons = document.querySelectorAll(".popup__close");
 function createCard(cardData) {
     const cardTemplate = document.getElementById("card-template").content;
     const cardElement = cardTemplate.querySelector(".places__item").cloneNode(true);
-
     const cardImage = cardElement.querySelector(".card__image");
     const cardTitle = cardElement.querySelector(".card__title");
+    const likeButton = cardElement.querySelector(".card__like-button");
+    const deleteButton = cardElement.querySelector(".card__delete-button");
 
     cardTitle.textContent = cardData.name;
     cardImage.src = cardData.link;
     cardImage.alt = cardData.name;
+
+    // Лайк
+    likeButton.addEventListener("click", () => {
+        likeButton.classList.toggle("card__like-button_is-active")
+    });
+
+    // Удаление
+    deleteButton.addEventListener("click", () => {
+        cardElement.remove();
+    });
+
 
     return cardElement;
 }
@@ -79,6 +91,7 @@ cardFormElement.addEventListener("submit", handleCardFormSubmit);
 
 addButton.addEventListener("click", () => openModal(cardPopup));
 editButton.addEventListener("click", () => openModal(profilePopup));
+
 
 closeButtons.forEach((button) => {
     button.addEventListener("click", () => closeModal(button.closest(".popup")));
