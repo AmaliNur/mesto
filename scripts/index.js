@@ -2,9 +2,12 @@
 const placesList = document.querySelector(".places__list");
 
 // Попапы
+const popups = document.querySelectorAll(".popup");
 const profilePopup = document.querySelector(".popup_type_edit");
 const cardPopup = document.querySelector(".popup_type_new-card");
 const imagePopup = document.querySelector(".popup_type_image");
+const popupImage = imagePopup.querySelector(".popup__image");
+const popupCaption = imagePopup.querySelector(".popup__caption");
 
 // Формы и их поля ввода
 const profileFormElement = document.querySelector(".popup__form");
@@ -44,6 +47,13 @@ function createCard(cardData) {
         cardElement.remove();
     });
 
+    // Открытие попапа с картинкой
+    cardImage.addEventListener("click", () => {
+        popupImage.src = cardData.link;
+        popupImage.alt = cardData.name;
+        popupCaption.textContent = cardData.name;
+        openModal(imagePopup);
+    })
 
     return cardElement;
 }
@@ -95,4 +105,9 @@ editButton.addEventListener("click", () => openModal(profilePopup));
 
 closeButtons.forEach((button) => {
     button.addEventListener("click", () => closeModal(button.closest(".popup")));
+});
+
+// Анимации для попапов
+popups.forEach(popup => {
+    popup.classList.add("popup_is-animated");
 });
