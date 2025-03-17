@@ -111,3 +111,12 @@ closeButtons.forEach((button) => {
 popups.forEach(popup => {
     popup.classList.add("popup_is-animated");
 });
+
+// Закрытие попапа на оверлей
+popups.forEach((popup) => {
+    popup.addEventListener("click", (evt) => {
+        if (evt.target === popup) {
+            closeModal(popup);
+        }
+    })
+})
